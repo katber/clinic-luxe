@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clinic Luxe – Göteborg</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF7F2;
+    --beige: #F0E9DF;
+    --blush: #E8D5C4;
+    --rose: #C9A99A;
+    --brown: #8B6B52;
+    --dark: #2C2218;
+    --text: #4A3728;
+    --muted: #9B8677;
+    --gold: #B8975A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(250,247,242,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(139,107,82,0.12);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: var(--dark);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--dark); }
+
+  .nav-book {
+    background: var(--brown);
+    color: #fff !important;
+    padding: 10px 24px;
+    border-radius: 2px;
+    font-size: 12px !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase;
+    transition: background 0.2s !important;
+  }
+
+  .nav-book:hover { background: var(--dark) !important; color: #fff !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 64px 80px 80px;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-label::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 68px;
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--dark);
+    margin-bottom: 28px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--brown);
+  }
+
+  .hero-subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 380px;
+    margin-bottom: 48px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .btn-primary {
+    background: var(--brown);
+    color: #fff;
+    padding: 14px 36px;
+    border: none;
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--dark); }
+
+  .btn-secondary {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--blush);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .btn-secondary:hover { color: var(--brown); border-color: var(--brown); }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+    background: var(--beige);
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.95) saturate(0.9);
+  }
+
+  .hero-image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #E8D5C4 0%, #D4B5A0 40%, #C09B82 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    color: rgba(255,255,255,0.6);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    font-style: italic;
+  }
+
+  /* ── STATS ── */
+  .stats {
+    background: var(--dark);
+    padding: 60px 80px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .stat {
+    text-align: center;
+    padding: 0 40px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ── REVIEWS ── */
+  .reviews {
+    padding: 80px 80px 60px;
+    background: var(--beige);
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 300;
+    color: var(--dark);
+    margin-bottom: 48px;
+    max-width: 560px;
+    line-height: 1.2;
+  }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .review-card {
+    background: var(--cream);
+    padding: 36px;
+    border-radius: 2px;
+    border: 1px solid rgba(139,107,82,0.1);
+  }
+
+  .stars {
+    color: var(--gold);
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+
+  .review-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--dark);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .review-author {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── TREATMENTS ── */
+  .treatments {
+    padding: 80px;
+    background: var(--cream);
+  }
+
+  .treatments-header {
+    margin-bottom: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .treatments-cta {
+    font-size: 13px;
+    color: var(--brown);
+    text-decoration: none;
+    border-bottom: 1px solid var(--blush);
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+
+  .treatments-cta:hover { border-color: var(--brown); }
+
+  .category {
+    border-top: 1px solid var(--blush);
+    overflow: hidden;
+  }
+
+  .category:last-child { border-bottom: 1px solid var(--blush); }
+
+  .category-header {
+    padding: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s;
+  }
+
+  .category-header:hover .category-name { color: var(--brown); }
+
+  .category-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--dark);
+    transition: color 0.2s;
+  }
+
+  .category-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .category-count {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  .category-toggle {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--blush);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--muted);
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+
+  .category.open .category-toggle {
+    background: var(--brown);
+    border-color: var(--brown);
+    color: #fff;
+    transform: rotate(45deg);
+  }
+
+  .category-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+
+  .category.open .category-body { max-height: 2000px; }
+
+  .treatment-list {
+    padding-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .treatment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-top: 1px solid rgba(139,107,82,0.07);
+  }
+
+  .treatment-item:first-child { border-top: none; }
+
+  .treatment-info { flex: 1; }
+
+  .treatment-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 2px;
+  }
+
+  .treatment-time {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .treatment-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+
+  .treatment-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--brown);
+    min-width: 90px;
+    text-align: right;
+  }
+
+  .btn-book-small {
+    background: transparent;
+    border: 1px solid var(--blush);
+    color: var(--muted);
+    padding: 7px 18px;
+    border-radius: 2px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-book-small:hover {
+    background: var(--brown);
+    border-color: var(--brown);
+    color: #fff;
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    padding: 100px 80px;
+    background: var(--beige);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-image-wrap {
+    position: relative;
+    border-radius: 2px;
+    overflow: hidden;
+    aspect-ratio: 4/5;
+    background: linear-gradient(160deg, #D4B5A0 0%, #B8917A 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-image-placeholder {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-style: italic;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 2px;
+  }
+
+  .about-content {}
+
+  .about-text {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.9;
+    margin-bottom: 24px;
+    font-weight: 300;
+  }
+
+  .about-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--dark);
+    line-height: 1.5;
+    margin: 36px 0;
+    padding-left: 24px;
+    border-left: 2px solid var(--gold);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    padding: 60px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+
+  .footer-tagline {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 1px;
+    line-height: 1.8;
+  }
+
+  .footer-heading {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .footer-info {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    line-height: 2;
+  }
+
+  .footer-bottom {
+    background: var(--dark);
+    padding: 20px 80px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 100px 24px 48px; }
+    .hero-title { font-size: 44px; }
+    .hero-right { height: 340px; }
+    .stats { grid-template-columns: repeat(2, 1fr); padding: 48px 24px; gap: 32px; }
+    .stat { border-right: none; }
+    .reviews { padding: 60px 24px; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .treatments { padding: 60px 24px; }
+    .treatments-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .about { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+    footer { grid-template-columns: 1fr; padding: 48px 24px; }
+    .footer-bottom { padding: 16px 24px; flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">CLINIC LUXE</a>
+  <ul class="nav-links">
+    <li><a href="#treatments">Behandlingar</a></li>
+    <li><a href="#about">Om oss</a></li>
+    <li><a href="#contact">Kontakt</a></li>
+    <li><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="nav-book">Boka nu</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-label">Göteborg · Sedan 2019</div>
+    <h1 class="hero-title">Din hud.<br><em>Din skönhet.</em><br>Din lyx.</h1>
+    <p class="hero-subtitle">Vi erbjuder avancerade skönhetsbehandlingar med de senaste teknikerna — från HIFU och laserhårborttagning till kemisk peeling och massage. Allt för att du ska känna dig som din bästa version.</p>
+    <div class="hero-actions">
+      <a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-primary">Boka behandling</a>
+      <a href="#treatments" class="btn-secondary">Se alla behandlingar</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-image-placeholder">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1">
+        <circle cx="24" cy="24" r="20"/>
+        <path d="M24 14 C18 14 14 18 14 24 C14 30 18 34 24 34"/>
+        <path d="M24 14 C30 14 34 18 34 24 C34 30 30 34 24 34"/>
+      </svg>
+      Klinisk lyx i hjärtat av Göteborg
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stat">
+    <div class="stat-number">500+</div>
+    <div class="stat-label">Nöjda kunder</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">4.9★</div>
+    <div class="stat-label">Betyg på Bokadirekt</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">30+</div>
+    <div class="stat-label">Behandlingar</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">100%</div>
+    <div class="stat-label">Certifierad personal</div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews">
+  <div class="section-label">Vad våra kunder säger</div>
+  <h2 class="section-title">Upplevelser som talar för sig själva</h2>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"Fantastisk upplevelse från början till slut. Resultatet efter HIFU-behandlingen var häpnadsväckande — huden ser år yngre ut."</p>
+      <div class="review-author">— Anna K.</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"Professionell personal och härlig atmosfär. Laserhårborttagningen har förändrat min vardag. Rekommenderar varmt!"</p>
+      <div class="review-author">— Sara M.</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"Bästa kliniken i Göteborg utan tvekan. Kemisk peeling gav mig huden jag alltid drömt om. Kommer tillbaka!"</p>
+      <div class="review-author">— Linda P.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TREATMENTS -->
+<section class="treatments" id="treatments">
+  <div class="treatments-header">
+    <div>
+      <div class="section-label">Vårt utbud</div>
+      <h2 class="section-title">Behandlingar</h2>
+    </div>
+    <a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="treatments-cta">Boka direkt →</a>
+  </div>
+
+  <!-- Hårborttagning -->
+  <div class="category" onclick="toggleCategory(this)">
+    <div class="category-header">
+      <span class="category-name">Hårborttagning med laser</span>
+      <div class="category-meta">
+        <span class="category-count">10 behandlingar</span>
+        <span class="category-toggle">+</span>
+      </div>
+    </div>
+    <div class="category-body">
+      <div class="treatment-list">
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Hela armar</div><div class="treatment-time">45 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">1 090 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Hela ben</div><div class="treatment-time">30 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">2 090 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Lår + bikini</div><div class="treatment-time">60 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">1 800 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Mage</div><div class="treatment-time">25 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">700 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Magsträng</div><div class="treatment-time">30 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">500 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Armhåla (laser)</div><div class="treatment-time">30 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">1 090 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Nacke</div><div class="treatment-time">25 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">400 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Överläpp / haka / polisonger / händer / fötter / skägglinje</div><div class="treatment-time">30 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">890 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Överläpp + haka</div><div class="treatment-time">20 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">790 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Rumpa</div><div class="treatment-time">30 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">700 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Rygg + svank</div><div class="treatment-time">45 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">1 600 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIFU -->
+  <div class="category" onclick="toggleCategory(this)">
+    <div class="category-header">
+      <span class="category-name">HIFU – Hudlyftning & kropp</span>
+      <div class="category-meta">
+        <span class="category-count">15 behandlingar</span>
+        <span class="category-toggle">+</span>
+      </div>
+    </div>
+    <div class="category-body">
+      <div class="treatment-list">
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 12D – Ansikte, hals & dekolletage</div><div class="treatment-time">60 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">5 999 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 14D PRO – Armar</div><div class="treatment-time">40 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">4 199 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 14D PRO – Dubbelhaka</div><div class="treatment-time">30 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">3 799 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 14D PRO – Lår</div><div class="treatment-time">60 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">6 799 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 14D PRO – Mage</div><div class="treatment-time">45 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">8 900 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 14D PRO – Ansikte</div><div class="treatment-time">40 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">10 900 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 14D PRO – Ansikte + hals + dubbelhaka</div><div class="treatment-time">45 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">11 900 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 14D PRO – Hals</div><div class="treatment-time">15 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">3 900 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 14D PRO – Käklinje + hals</div><div class="treatment-time">25 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">4 900 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 14D PRO ÖGON</div><div class="treatment-time">20 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">3 250 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 24D PRO MAX – Ansikte + hals + dubbelhaka + ögon</div><div class="treatment-time">45 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">28 900 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 24D PRO MAX – Bröstlyft</div><div class="treatment-time">30 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">14 900 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 24D PRO MAX – Mage</div><div class="treatment-time">40 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">17 800 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 24D PRO MAX – Ansikte</div><div class="treatment-time">45 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">23 800 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">HIFU 24D PRO MAX – Armar</div><div class="treatment-time">25 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">8 398 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hudvård & peeling -->
+  <div class="category" onclick="toggleCategory(this)">
+    <div class="category-header">
+      <span class="category-name">Hudvård & peeling</span>
+      <div class="category-meta">
+        <span class="category-count">5 behandlingar</span>
+        <span class="category-toggle">+</span>
+      </div>
+    </div>
+    <div class="category-body">
+      <div class="treatment-list">
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Kemisk peeling</div><div class="treatment-time">15 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">–</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Ansiktspeeling (detoxing) – hyaluronsyra</div><div class="treatment-time">30 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">3 000 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Peeling hyaluronsyra detoxing</div><div class="treatment-time">30 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">3 000 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Retinol behandling</div><div class="treatment-time">50 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">1 199 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Pigmentborttagning</div><div class="treatment-time">15 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">499 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Plasma & lyft -->
+  <div class="category" onclick="toggleCategory(this)">
+    <div class="category-header">
+      <span class="category-name">Plasma, lyft & avancerade tekniker</span>
+      <div class="category-meta">
+        <span class="category-count">6 behandlingar</span>
+        <span class="category-toggle">+</span>
+      </div>
+    </div>
+    <div class="category-body">
+      <div class="treatment-list">
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Plasmapen / Fibroplast – ögonlockslyft</div><div class="treatment-time">60 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">6 900 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Smart plasma utan nål</div><div class="treatment-time">30 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">2 999 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Trådlyft med nanoteknik</div><div class="treatment-time">80 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">1 899 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Mesojetgun akne – 5 gånger</div><div class="treatment-time">50 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">6 999 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Aknebehandling svår – högfrekvens</div><div class="treatment-time">60 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">1 599 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bryn, fransar & mun -->
+  <div class="category" onclick="toggleCategory(this)">
+    <div class="category-header">
+      <span class="category-name">Bryn, fransar & tandblekning</span>
+      <div class="category-meta">
+        <span class="category-count">4 behandlingar</span>
+        <span class="category-toggle">+</span>
+      </div>
+    </div>
+    <div class="category-body">
+      <div class="treatment-list">
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Ögonbrynsplocking / trådning</div><div class="treatment-time">20 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">från 199 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Trådning – överläpp / haka + kinder</div><div class="treatment-time">25 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">385 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Trådning – överläpp eller haka + kinder</div><div class="treatment-time">20 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">450 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Tandblekning</div><div class="treatment-time">30 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">från 499 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Massage & välmående -->
+  <div class="category" onclick="toggleCategory(this)">
+    <div class="category-header">
+      <span class="category-name">Massage & välmående</span>
+      <div class="category-meta">
+        <span class="category-count">2 behandlingar</span>
+        <span class="category-toggle">+</span>
+      </div>
+    </div>
+    <div class="category-body">
+      <div class="treatment-list">
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Klassisk massage (friskvård)</div><div class="treatment-time">35 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">599 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+        <div class="treatment-item">
+          <div class="treatment-info"><div class="treatment-name">Konsultation (kostnadsfritt)</div><div class="treatment-time">15 min</div></div>
+          <div class="treatment-right"><div class="treatment-price">1 kr</div><a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-book-small">Boka</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-image-wrap">
+    <div class="about-image-placeholder">Clinic Luxe</div>
+  </div>
+  <div class="about-content">
+    <div class="section-label">Om oss</div>
+    <h2 class="section-title">Expertis möter omsorg</h2>
+    <p class="about-text">Clinic Luxe är en modern skönhetsklinik i Göteborg som erbjuder avancerade behandlingar med de allra senaste teknikerna på marknaden. Vi arbetar med HIFU, laser, plasma och andra innovativa metoder för att ge dig resultat som varar.</p>
+    <div class="about-quote">"Vi tror på att skönhet är en investering i dig själv — och vi är här för att guida dig hela vägen."</div>
+    <p class="about-text">Varje behandling anpassas individuellt efter dina behov och önskemål. Vi erbjuder alltid en gratis konsultation innan du bestämmer dig.</p>
+    <a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" class="btn-primary">Boka konsultation</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div>
+    <div class="footer-logo">CLINIC LUXE</div>
+    <p class="footer-tagline">Avancerade skönhetsbehandlingar<br>i hjärtat av Göteborg.</p>
+  </div>
+  <div>
+    <div class="footer-heading">Kontakt</div>
+    <div class="footer-info">
+      Göteborg, Sverige<br>
+      <a href="https://www.bokadirekt.se/places/clinic-luxe-59685" target="_blank" style="color: var(--gold); text-decoration: none;">Boka via Bokadirekt</a>
+    </div>
+  </div>
+  <div>
+    <div class="footer-heading">Öppettider</div>
+    <div class="footer-info">
+      Mån – Fre: 09:00 – 18:00<br>
+      Lördag: 10:00 – 16:00<br>
+      Söndag: Stängt
+    </div>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span class="footer-copy">© 2026 Clinic Luxe. Alla rättigheter förbehållna.</span>
+  <span class="footer-copy">Göteborg, Sverige</span>
+</div>
+
+<script>
+function toggleCategory(el) {
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.category.open').forEach(c => c.classList.remove('open'));
+  if (!isOpen) el.classList.add('open');
+}
+</script>
+
+</body>
+</html>
