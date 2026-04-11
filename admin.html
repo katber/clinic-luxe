@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCSv54FNhXRsdWV-FWIFOIcGl-6lEI2jZg",
+            authDomain: "clinic-luxe.firebaseapp.com",
+            projectId: "clinic-luxe",
+            storageBucket: "clinic-luxe.firebasestorage.app",
+            messagingSenderId: "433363591424",
+            appId: "1:433363591424:web:7f41095514d5ee25b453e5"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+
+        // Authentication and Firestore references
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <p>Welcome to the Admin Panel!</p>
+    <button id="logout">Logout</button>
+
+    <script>
+        document.getElementById('logout').addEventListener('click', () => {
+            auth.signOut().then(() => {
+                alert('Logged out successfully!');
+            }).catch((error) => {
+                alert('Error logging out: ' + error.message);
+            });
+        });
+    </script>
+</body>
+</html>
