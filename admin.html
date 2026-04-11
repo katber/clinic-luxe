@@ -145,14 +145,16 @@
 </div>
 
 <script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyCSv54FNhXRsdWV-FWIFOIcGl-6lEI2jZg",
-        authDomain: "clinic-luxe.firebaseapp.com",
-        projectId: "clinic-luxe",
-        storageBucket: "clinic-luxe.firebasestorage.app",
-        messagingSenderId: "433363591424",
-        appId: "1:433363591424:web:7f41095514d5ee25b453e5"
-    };
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCSv54FNhXRsdWV-FWIFOIcGl-6lEI2jZg",
+  authDomain: "clinic-luxe.firebaseapp.com",
+  projectId: "clinic-luxe",
+  storageBucket: "clinic-luxe.firebasestorage.app",
+  messagingSenderId: "433363591424",
+  appId: "1:433363591424:web:7f41095514d5ee25b453e5",
+  measurementId: "G-SRLRBKEC0D"
+};
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
