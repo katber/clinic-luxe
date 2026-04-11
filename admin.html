@@ -1,42 +1,318 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin Panel</title>
-    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"></script>
-    <script>
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCSv54FNhXRsdWV-FWIFOIcGl-6lEI2jZg",
-            authDomain: "clinic-luxe.firebaseapp.com",
-            projectId: "clinic-luxe",
-            storageBucket: "clinic-luxe.firebasestorage.app",
-            messagingSenderId: "433363591424",
-            appId: "1:433363591424:web:7f41095514d5ee25b453e5"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-
-        // Authentication and Firestore references
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Clinic Luxe</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', Arial; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header { background: #8B6B52; color: white; padding: 20px 0; margin-bottom: 30px; }
+        header h1 { text-align: center; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #E8D5C4; }
+        .tab { padding: 12px 20px; background: #E8D5C4; color: #2C2218; border: none; cursor: pointer; border-radius: 4px 4px 0 0; }
+        .tab.active { background: #FAF7F2; }
+        .section { display: none; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .section.active { display: block; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #2C2218; font-weight: 500; }
+        input, textarea, select { width: 100%; padding: 10px; border: 1px solid #E8D5C4; border-radius: 4px; font-family: inherit; }
+        button { background: #8B6B52; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #2C2218; }
+        .item { background: #FAF7F2; padding: 15px; margin-bottom: 10px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; }
+        .delete-btn { background: #C9A99A; padding: 8px 12px; }
+        .delete-btn:hover { background: #A17A6A; }
+        .message { padding: 10px; margin-top: 10px; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .logout-btn { background: #9B8677; float: right; }
+        h2 { color: #8B6B52; margin-bottom: 20px; }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
 </head>
 <body>
-    <h1>Admin Panel</h1>
-    <p>Welcome to the Admin Panel!</p>
-    <button id="logout">Logout</button>
 
-    <script>
-        document.getElementById('logout').addEventListener('click', () => {
-            auth.signOut().then(() => {
-                alert('Logged out successfully!');
-            }).catch((error) => {
-                alert('Error logging out: ' + error.message);
+<div id="loginPage">
+    <div class="container" style="max-width: 400px; margin-top: 100px;">
+        <h1 style="text-align: center; margin-bottom: 30px;">🏥 Clinic Luxe Admin</h1>
+        <div class="form-group">
+            <label>E-post:</label>
+            <input type="email" id="email" placeholder="admin@clinicluxe.se">
+        </div>
+        <div class="form-group">
+            <label>Lösenord:</label>
+            <input type="password" id="password" placeholder="••••••••">
+        </div>
+        <button onclick="login()" style="width: 100%;">Logga in</button>
+        <div id="loginMessage" class="message" style="display: none;"></div>
+    </div>
+</div>
+
+<div id="adminPage" style="display: none;">
+    <header>
+        <div class="container">
+            <h1>🏥 Clinic Luxe Admin Panel</h1>
+            <button class="logout-btn" onclick="logout()">Logga ut</button>
+            <div style="clear: both;"></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('treatments')">Behandlingar</button>
+            <button class="tab" onclick="switchTab('reviews')">Recensioner</button>
+            <button class="tab" onclick="switchTab('contact')">Kontakt</button>
+        </div>
+
+        <div id="treatments" class="section active">
+            <h2>Lägg till behandling</h2>
+            <form onsubmit="addTreatment(event)">
+                <div class="form-group">
+                    <label>Kategori:</label>
+                    <input type="text" id="treatmentCategory" required>
+                </div>
+                <div class="form-group">
+                    <label>Namn:</label>
+                    <input type="text" id="treatmentName" required>
+                </div>
+                <div class="form-group">
+                    <label>Varaktighet:</label>
+                    <input type="text" id="treatmentDuration" placeholder="t.ex. 40 min">
+                </div>
+                <div class="form-group">
+                    <label>Pris:</label>
+                    <input type="text" id="treatmentPrice" placeholder="t.ex. 10 900 kr">
+                </div>
+                <button type="submit">Lägg till behandling</button>
+            </form>
+            <div id="treatmentMessage"></div>
+
+            <h2 style="margin-top: 40px;">Dina behandlingar</h2>
+            <div id="treatmentsList"></div>
+        </div>
+
+        <div id="reviews" class="section">
+            <h2>Lägg till recensión</h2>
+            <form onsubmit="addReview(event)">
+                <div class="form-group">
+                    <label>Namn:</label>
+                    <input type="text" id="reviewAuthor" required>
+                </div>
+                <div class="form-group">
+                    <label>Betyg:</label>
+                    <select id="reviewRating" required>
+                        <option value="">Välj betyg</option>
+                        <option value="5">⭐⭐⭐⭐⭐ (5 stjärnor)</option>
+                        <option value="4">⭐⭐⭐⭐ (4 stjärnor)</option>
+                        <option value="3">⭐⭐⭐ (3 stjärnor)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Text:</label>
+                    <textarea id="reviewText" required></textarea>
+                </div>
+                <button type="submit">Lägg till recensión</button>
+            </form>
+            <div id="reviewMessage"></div>
+
+            <h2 style="margin-top: 40px;">Dina recensioner</h2>
+            <div id="reviewsList"></div>
+        </div>
+
+        <div id="contact" class="section">
+            <h2>Uppdatera kontaktinfo</h2>
+            <form onsubmit="updateContact(event)">
+                <div class="form-group">
+                    <label>Adress:</label>
+                    <input type="text" id="contactAddress" placeholder="Storgatan 123, 411 38 Göteborg">
+                </div>
+                <div class="form-group">
+                    <label>Telefon:</label>
+                    <input type="tel" id="contactPhone" placeholder="031-123 45 67">
+                </div>
+                <div class="form-group">
+                    <label>E-post:</label>
+                    <input type="email" id="contactEmail" placeholder="info@clinicluxe.se">
+                </div>
+                <button type="submit">Spara kontaktinfo</button>
+            </form>
+            <div id="contactMessage"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyCSv54FNhXRsdWV-FWIFOIcGl-6lEI2jZg",
+        authDomain: "clinic-luxe.firebaseapp.com",
+        projectId: "clinic-luxe",
+        storageBucket: "clinic-luxe.firebasestorage.app",
+        messagingSenderId: "433363591424",
+        appId: "1:433363591424:web:7f41095514d5ee25b453e5"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('adminPage').style.display = 'block';
+            loadTreatments();
+            loadReviews();
+            loadContact();
+        } else {
+            document.getElementById('loginPage').style.display = 'block';
+            document.getElementById('adminPage').style.display = 'none';
+        }
+    });
+
+    function login() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        auth.signInWithEmailAndPassword(email, password)
+            .catch(error => {
+                const msg = document.getElementById('loginMessage');
+                msg.style.display = 'block';
+                msg.className = 'message error';
+                msg.textContent = error.message;
             });
-        });
-    </script>
+    }
+
+    function logout() {
+        auth.signOut();
+    }
+
+    function switchTab(tabName) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(tabName).classList.add('active');
+        event.target.classList.add('active');
+    }
+
+    async function addTreatment(e) {
+        e.preventDefault();
+        try {
+            await db.collection('treatments').add({
+                category: document.getElementById('treatmentCategory').value,
+                name: document.getElementById('treatmentName').value,
+                duration: document.getElementById('treatmentDuration').value,
+                price: document.getElementById('treatmentPrice').value,
+                createdAt: new Date()
+            });
+            document.querySelector('#treatments form').reset();
+            const msg = document.getElementById('treatmentMessage');
+            msg.className = 'message success';
+            msg.textContent = '✓ Behandling tillagd!';
+            loadTreatments();
+        } catch (error) {
+            const msg = document.getElementById('treatmentMessage');
+            msg.className = 'message error';
+            msg.textContent = 'Fel: ' + error.message;
+        }
+    }
+
+    async function loadTreatments() {
+        try {
+            const snapshot = await db.collection('treatments').orderBy('createdAt', 'desc').get();
+            let html = '';
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                html += `<div class="item"><div><strong>${data.name}</strong> - ${data.duration} - ${data.price}<br><small>${data.category}</small></div><button class="delete-btn" onclick="deleteTreatment('${doc.id}')">Ta bort</button></div>`;
+            });
+            document.getElementById('treatmentsList').innerHTML = html || '<p>Ingen behandling tillagd ännu.</p>';
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function deleteTreatment(id) {
+        if (confirm('Är du säker?')) {
+            await db.collection('treatments').doc(id).delete();
+            loadTreatments();
+        }
+    }
+
+    async function addReview(e) {
+        e.preventDefault();
+        try {
+            await db.collection('reviews').add({
+                author: document.getElementById('reviewAuthor').value,
+                rating: parseInt(document.getElementById('reviewRating').value),
+                text: document.getElementById('reviewText').value,
+                createdAt: new Date()
+            });
+            document.querySelector('#reviews form').reset();
+            const msg = document.getElementById('reviewMessage');
+            msg.className = 'message success';
+            msg.textContent = '✓ Recensión tillagd!';
+            loadReviews();
+        } catch (error) {
+            const msg = document.getElementById('reviewMessage');
+            msg.className = 'message error';
+            msg.textContent = 'Fel: ' + error.message;
+        }
+    }
+
+    async function loadReviews() {
+        try {
+            const snapshot = await db.collection('reviews').orderBy('createdAt', 'desc').get();
+            let html = '';
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const stars = '⭐'.repeat(data.rating);
+                html += `<div class="item"><div><strong>${data.author}</strong> ${stars}<br><em>"${data.text}"</em></div><button class="delete-btn" onclick="deleteReview('${doc.id}')">Ta bort</button></div>`;
+            });
+            document.getElementById('reviewsList').innerHTML = html || '<p>Ingen recensión tillagd ännu.</p>';
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function deleteReview(id) {
+        if (confirm('Är du säker?')) {
+            await db.collection('reviews').doc(id).delete();
+            loadReviews();
+        }
+    }
+
+    async function updateContact(e) {
+        e.preventDefault();
+        try {
+            await db.collection('contact').doc('info').set({
+                address: document.getElementById('contactAddress').value,
+                phone: document.getElementById('contactPhone').value,
+                email: document.getElementById('contactEmail').value,
+                updatedAt: new Date()
+            });
+            const msg = document.getElementById('contactMessage');
+            msg.className = 'message success';
+            msg.textContent = '✓ Kontaktinfo sparad!';
+        } catch (error) {
+            const msg = document.getElementById('contactMessage');
+            msg.className = 'message error';
+            msg.textContent = 'Fel: ' + error.message;
+        }
+    }
+
+    async function loadContact() {
+        try {
+            const doc = await db.collection('contact').doc('info').get();
+            if (doc.exists) {
+                const data = doc.data();
+                document.getElementById('contactAddress').value = data.address || '';
+                document.getElementById('contactPhone').value = data.phone || '';
+                document.getElementById('contactEmail').value = data.email || '';
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+</script>
+
 </body>
 </html>
